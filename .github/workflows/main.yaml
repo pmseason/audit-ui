@@ -35,11 +35,13 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+      - name: Print PAT
+        run: echo "${{ secrets.PAT }}"
       - name: Create .npmrc
         run: |
             echo "registry=https://registry.yarnpkg.com/" > .npmrc
             echo "@mrinal-c:registry=https://npm.pkg.github.com" >> .npmrc
-            echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
+            echo "//npm.pkg.github.com/:_authToken=${{ secrets.PAT }}" >> .npmrc
             echo "always-auth=true" >> .npmrc
       - name: Install dependencies
         run: npm ci
