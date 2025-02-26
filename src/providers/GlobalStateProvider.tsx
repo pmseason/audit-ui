@@ -14,7 +14,7 @@ interface Props {
 export function GlobalStateProvider({ children }: Props) {
   //local state, this is put into global context
   const [supportedSources, setSupportedSources] = useState<SearchSource[]>([]);
-  const [searchConfigs, setSearchConfigs] = useState<SearchConfig[]>([]);
+  const [searchConfigs, _setSearchConfigs] = useState<SearchConfig[]>([]);
   const [currentAuditId, setCurrentAuditId] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [includeFlags, setIncludeFlags] = useState<boolean[]>([]);
@@ -76,6 +76,11 @@ export function GlobalStateProvider({ children }: Props) {
   const getSearchableConfigs = () => {
     return searchConfigs.filter((_, index) => includeFlags[index]);
   };
+
+  const setSearchConfigs = (configs: SearchConfig[]) => {
+    _setSearchConfigs(configs)
+    setIncludeFlags(new Array(configs.length).fill(true))
+  }
 
   const setServerUrl = (url: string) => {
     _setServerUrl(url);
