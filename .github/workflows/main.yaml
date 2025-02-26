@@ -61,5 +61,5 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         env:
-            NODE_AUTH_TOKEN=${{secrets.GITHUB_TOKEN}}
+            NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
