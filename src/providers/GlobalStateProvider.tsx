@@ -76,7 +76,7 @@ export function GlobalStateProvider({ children }: Props) {
   }
 
   const getSearchableConfigs = () => {
-    return searchConfigs.filter((value, index) => includeFlags[index]);
+    return searchConfigs.filter((_, index) => includeFlags[index]);
   }
 
 

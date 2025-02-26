@@ -12,7 +12,7 @@ export function StartSearch() {
   const [chromeUrl, setChromeUrl] = useState("");
 
   //global app state
-  const { searchConfigs, setCurrentAuditId, addToSearchResults, getSearchableConfigs } = useContext(
+  const {  setCurrentAuditId, addToSearchResults, getSearchableConfigs } = useContext(
     AppContext
   ) as GlobalState;
 

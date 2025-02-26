@@ -3,7 +3,6 @@ import CustomDialog from "./ui/custom-dialog";
 import { Input } from "./ui/input";
 import { AppContext } from "@/contexts/AppContext";
 import { GlobalState } from "@/types/types";
-import { SearchConfig } from "@mrinal-c/ai-job-scraper";
 import { searchConfigListSchema } from "@/types/zod";
 
 interface Props {

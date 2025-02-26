@@ -2,7 +2,7 @@ import axios from "axios";
 import { isOk } from "./api";
 
 export async function pollSearchResults(auditId: string): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         const pollInterval = setInterval(async () => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/audit/${auditId}/status`);
