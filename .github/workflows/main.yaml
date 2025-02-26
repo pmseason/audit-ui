@@ -35,12 +35,12 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-      - name: Create .npmrc
-        run: |
-            echo "registry=https://registry.yarnpkg.com/" > .npmrc
-            echo "@mrinal-c:registry=https://npm.pkg.github.com" >> .npmrc
-            echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
-            echo "always-auth=true" >> .npmrc
+    #   - name: Create .npmrc
+    #     run: |
+    #         echo "registry=https://registry.yarnpkg.com/" > .npmrc
+    #         echo "@mrinal-c:registry=https://npm.pkg.github.com" >> .npmrc
+    #         echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
+    #         echo "always-auth=true" >> .npmrc
         
 
       - name: Install dependencies
@@ -60,4 +60,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        env:
+            NODE_AUTH_TOKEN=${{secrets.GITHUB_TOKEN}}
         
