@@ -4,6 +4,6 @@ upload config
 fix action menu ui
 info everywhere
 download config
-- deploy everything
+deploy everything
 - instructions
 - get remote url working
