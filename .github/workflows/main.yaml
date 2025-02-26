@@ -35,12 +35,17 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+      - name: Print secret
+        run: echo ${{ secrets.GITHUB_TOKEN }}
+
       - name: Install dependencies
         env:
-            NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm ci
+
       - name: Build
         run: npm run build
+        
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
