@@ -1,4 +1,4 @@
-import { getSupportedSources } from "@/api/api";
+import { getSupportedSources, validateRemoteServer } from "@/api/api";
 import { AppContext } from "@/contexts/AppContext";
 import {
   SearchConfig,
@@ -18,15 +18,14 @@ export function GlobalStateProvider({ children }: Props) {
   const [currentAuditId, setCurrentAuditId] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [includeFlags, setIncludeFlags] = useState<boolean[]>([]);
+  const [serverUrl, _setServerUrl] = useState("");
 
   //on first load
   useEffect(() => {
     init();
   }, []);
 
-  const init = () => {
-    getSupportedSources().then(setSupportedSources).catch(console.error);
-  };
+  const init = () => {};
 
   const isEquals = (a: SearchConfig, b: SearchConfig) => {
     return (
@@ -42,9 +41,8 @@ export function GlobalStateProvider({ children }: Props) {
 
     searchResults.forEach((result) => {
       if (
-        !mergedResults.some(
-          (existingResult) =>
-            isEquals(existingResult.searchConfig!, result.searchConfig!)
+        !mergedResults.some((existingResult) =>
+          isEquals(existingResult.searchConfig!, result.searchConfig!)
         )
       ) {
         mergedResults.push(result);
@@ -56,7 +54,7 @@ export function GlobalStateProvider({ children }: Props) {
   const addToConfig = (config: SearchConfig) => {
     setSearchConfigs([...searchConfigs, config]);
     setIncludeFlags([...includeFlags, false]);
-  }
+  };
 
   const removeFromConfig = (index: number) => {
     const updatedConfigs = [...searchConfigs];
@@ -65,20 +63,24 @@ export function GlobalStateProvider({ children }: Props) {
     updatedFlags.splice(index, 1);
     setSearchConfigs(updatedConfigs);
     setIncludeFlags(updatedFlags);
-  }
+  };
 
-  const addToNextSearch = (index: number) =>  {
-    includeFlags[index] = true
-  }
+  const addToNextSearch = (index: number) => {
+    includeFlags[index] = true;
+  };
 
-  const removeFromNextSearch = (index: number) =>  {
+  const removeFromNextSearch = (index: number) => {
     includeFlags[index] = false;
-  }
+  };
 
   const getSearchableConfigs = () => {
     return searchConfigs.filter((_, index) => includeFlags[index]);
-  }
+  };
 
+  const setServerUrl = (url: string) => {
+    _setServerUrl(url);
+    getSupportedSources(url).then(setSupportedSources).catch(console.error);
+  };
 
   return (
     <AppContext.Provider
@@ -87,6 +89,7 @@ export function GlobalStateProvider({ children }: Props) {
         searchConfigs,
         currentAuditId,
         searchResults,
+        serverUrl,
         addToConfig,
         removeFromConfig,
         setSupportedSources,
@@ -95,7 +98,8 @@ export function GlobalStateProvider({ children }: Props) {
         addToNextSearch,
         removeFromNextSearch,
         getSearchableConfigs,
-        setSearchConfigs
+        setSearchConfigs,
+        setServerUrl,
       }}
     >
       {children}

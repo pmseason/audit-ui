@@ -12,14 +12,14 @@ export function StartSearch() {
   const [chromeUrl, setChromeUrl] = useState("");
 
   //global app state
-  const {  setCurrentAuditId, addToSearchResults, getSearchableConfigs } = useContext(
+  const {  setCurrentAuditId, addToSearchResults, getSearchableConfigs, serverUrl } = useContext(
     AppContext
   ) as GlobalState;
 
   const beginAudit = async () => {
     //start a search, receive auditid on success
     const configs = getSearchableConfigs();
-    const id = await beginSearch(chromeUrl, configs);
+    const id = await beginSearch(serverUrl, chromeUrl, configs);
     if (!id) return;
 
     //set global audit id
@@ -36,13 +36,12 @@ export function StartSearch() {
 
   return (
     <span className="flex flex-row gap-3">
-      <Input
+      {/* <Input
         value={chromeUrl}
         onChange={(e) => setChromeUrl(e.target.value)}
-      ></Input>
+      ></Input> */}
       <Button
         type="button"
-        disabled={chromeUrl.trim().length == 0}
         onClick={beginAudit}
       >
         Begin Audit Search

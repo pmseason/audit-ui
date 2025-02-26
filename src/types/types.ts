@@ -5,6 +5,7 @@ export type GlobalState = {
     searchConfigs: SearchConfig[];
     currentAuditId?: string;
     searchResults: SearchResult[];
+    serverUrl: string;
     setSupportedSources: (sources: SearchSource[]) => void;
     addToConfig: (config: SearchConfig) => void;
     removeFromConfig: (index: number) => void;
@@ -14,6 +15,7 @@ export type GlobalState = {
     removeFromNextSearch: (index: number) => void;
     getSearchableConfigs: () => SearchConfig[];
     setSearchConfigs: (configs: SearchConfig[]) => void;
+    setServerUrl: (url: string) => void;
 }
 
 export type CSVSearchResult = {
