@@ -10,7 +10,7 @@ export async function getSupportedSources(url: string): Promise<SearchSource[]> 
     return response.data;
 }
 
-export async function beginSearch(url: string, chromeUrl: string, searchConfigs: SearchConfig[]): Promise<string | undefined> {
+export async function beginSearch(url: string, searchConfigs: SearchConfig[]): Promise<string | undefined> {
     const response = await axios.post(`${url}/audit/start`, {
         remoteUrl: "http://localhost:9222",
         searchConfigs: searchConfigs

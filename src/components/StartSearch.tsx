@@ -1,5 +1,4 @@
-import { useContext, useState } from "react";
-import { Input } from "./ui/input";
+import { useContext } from "react";
 import { Button } from "./ui/button";
 import { beginSearch } from "@/api/api";
 import { AppContext } from "@/contexts/AppContext";
@@ -8,18 +7,18 @@ import { pollSearchResults } from "@/api/poller";
 import { toast } from "sonner";
 
 export function StartSearch() {
-  //local state
-  const [chromeUrl, setChromeUrl] = useState("");
-
   //global app state
-  const {  setCurrentAuditId, addToSearchResults, getSearchableConfigs, serverUrl } = useContext(
-    AppContext
-  ) as GlobalState;
+  const {
+    setCurrentAuditId,
+    addToSearchResults,
+    getSearchableConfigs,
+    serverUrl,
+  } = useContext(AppContext) as GlobalState;
 
   const beginAudit = async () => {
     //start a search, receive auditid on success
     const configs = getSearchableConfigs();
-    const id = await beginSearch(serverUrl, chromeUrl, configs);
+    const id = await beginSearch(serverUrl, configs);
     if (!id) return;
 
     //set global audit id
@@ -29,7 +28,7 @@ export function StartSearch() {
     toast.promise(searchStatus, {
       loading: "Started an audit...",
       success: "Audit has successfully run!",
-      error: "An error has occurred, sorry"
+      error: "An error has occurred, sorry",
     });
     searchStatus.then(addToSearchResults);
   };
@@ -40,10 +39,7 @@ export function StartSearch() {
         value={chromeUrl}
         onChange={(e) => setChromeUrl(e.target.value)}
       ></Input> */}
-      <Button
-        type="button"
-        onClick={beginAudit}
-      >
+      <Button type="button" onClick={beginAudit}>
         Begin Audit Search
       </Button>
     </span>

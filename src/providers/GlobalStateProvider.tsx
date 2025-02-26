@@ -1,4 +1,4 @@
-import { getSupportedSources, validateRemoteServer } from "@/api/api";
+import { getSupportedSources } from "@/api/api";
 import { AppContext } from "@/contexts/AppContext";
 import {
   SearchConfig,
