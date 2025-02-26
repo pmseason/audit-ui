@@ -1,9 +1,8 @@
 import { useContext } from "react";
 import { Button } from "./ui/button";
-import { beginSearch } from "@/api/api";
+import { beginSearch, pollSearchResults } from "@/api/api";
 import { AppContext } from "@/contexts/AppContext";
 import { GlobalState } from "@/types/types";
-import { pollSearchResults } from "@/api/poller";
 import { toast } from "sonner";
 
 export function StartSearch() {
@@ -24,7 +23,7 @@ export function StartSearch() {
     //set global audit id
     setCurrentAuditId(id);
     //start polling for searchResults
-    const searchStatus = pollSearchResults(id);
+    const searchStatus = pollSearchResults(serverUrl, id);
     toast.promise(searchStatus, {
       loading: "Started an audit...",
       success: "Audit has successfully run!",

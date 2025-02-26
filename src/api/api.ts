@@ -21,6 +21,23 @@ export async function beginSearch(url: string, searchConfigs: SearchConfig[]): P
     }
 }
 
+
+export async function pollSearchResults(url: string, auditId: string): Promise<any> {
+    return new Promise((resolve) => {
+        const pollInterval = setInterval(async () => {
+            try {
+                const response = await axios.get(`${url}/audit/${auditId}/status`);
+                if (isOk(response)) {
+                    resolve(response.data);
+                    clearInterval(pollInterval);
+                }
+            } catch (error) {
+                // reject(error);
+            }
+        }, 5000);
+    });
+}
+
 export async function validateRemoteServer(url: string): Promise<boolean> {
     try {
         const response = await axios.get(`${url}`);
