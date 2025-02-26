@@ -53,7 +53,7 @@ export function GlobalStateProvider({ children }: Props) {
 
   const addToConfig = (config: SearchConfig) => {
     setSearchConfigs([...searchConfigs, config]);
-    setIncludeFlags([...includeFlags, false]);
+    setIncludeFlags([...includeFlags, true]);
   };
 
   const removeFromConfig = (index: number) => {
