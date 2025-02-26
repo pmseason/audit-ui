@@ -1,0 +1,9 @@
+clean up form input/editing
+add selects and add number in being audit search to show how many are being run
+upload config
+fix action menu ui
+info everywhere
+download config
+- deploy everything
+- instructions
+- get remote url working
