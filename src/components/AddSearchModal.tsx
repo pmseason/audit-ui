@@ -42,7 +42,7 @@ const AddSearchConfigModal: React.FC<AddSearchConfigModalProps> = ({
       url: z
         .string()
         .url("Invalid URL")
-        .startsWith(searchSource?.url ?? "", "URL must match selected source"),
+        .startsWith(searchSource?.url ?? "", "URL must start with the matching url from the source menu"),
       name: z.string().min(1, "Source Name is required"),
     }),
     roleType: z.enum(["apm", "internship"]),
