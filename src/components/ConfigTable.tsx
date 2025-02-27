@@ -40,6 +40,7 @@ const ConfigTable: React.FC<ConfigTableProps> = ({ configs }) => {
               <TableCell>
                 <Checkbox
                   className="border-black"
+                  defaultChecked={true}
                   onCheckedChange={(checked) => {
                     if (checked) addToNextSearch(index);
                     else removeFromNextSearch(index);
