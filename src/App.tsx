@@ -12,7 +12,7 @@ import ServerInput from "./components/ServerInput";
 
 function App() {
   //global app state
-  const { supportedSources, searchConfigs, serverUrl } = useContext(
+  const { supportedSources, searchConfigs } = useContext(
     AppContext
   ) as GlobalState;
 
@@ -20,7 +20,8 @@ function App() {
     <>
       <Header />
       <main className="px-4 flex flex-col items-start gap-4">
-        {serverUrl.length > 0 ? (
+        {/* leave as placeholder for future password prompt or something */}
+        {true ? (
           <>
             <section className="w-full flex flex-row justify-between items-center">
               <AddSearchConfigModal

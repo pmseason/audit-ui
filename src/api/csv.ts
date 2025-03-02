@@ -1,5 +1,5 @@
 import { CSVSearchResult } from "@/types/types";
-import { Job, ProcessedJob, SearchResult } from "@mrinal-c/ai-job-scraper";
+import { Job, ProcessedJob, SearchResult } from "@pmseason/ai-job-scraper";
 
 export function prepareForCsv(results: SearchResult[]): CSVSearchResult[] {
     const filtered = results.filter(result => result.tool !== "scraping");

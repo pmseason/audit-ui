@@ -1,18 +1,19 @@
-import { SearchConfig, SearchSource } from '@mrinal-c/ai-job-scraper';
+import { SearchConfig, SearchSource } from '@pmseason/ai-job-scraper';
 import axios, { AxiosResponse } from 'axios';
+
+const SERVER_URL = import.meta.env.VITE_SERVER_URL
 
 export const isOk = (response: AxiosResponse) => {
     return 200 <= response.status && response.status <= 299;
 }
 
-export async function getSupportedSources(url: string): Promise<SearchSource[]> {
-    const response = await axios.get<SearchSource[]>(`${url}/audit/supported`);
+export async function getSupportedSources(): Promise<SearchSource[]> {
+    const response = await axios.get<SearchSource[]>(`${SERVER_URL}/audit/supported`);
     return response.data;
 }
 
-export async function beginSearch(url: string, searchConfigs: SearchConfig[]): Promise<string | undefined> {
-    const response = await axios.post(`${url}/audit/start`, {
-        remoteUrl: "http://localhost:9222",
+export async function beginSearch(searchConfigs: SearchConfig[]): Promise<string | undefined> {
+    const response = await axios.post(`${SERVER_URL}/audit/start`, {
         searchConfigs: searchConfigs
     });
     if (isOk(response)) {
@@ -22,11 +23,11 @@ export async function beginSearch(url: string, searchConfigs: SearchConfig[]): P
 }
 
 
-export async function pollSearchResults(url: string, auditId: string): Promise<any> {
+export async function pollSearchResults(auditId: string): Promise<any> {
     return new Promise((resolve) => {
         const pollInterval = setInterval(async () => {
             try {
-                const response = await axios.get(`${url}/audit/${auditId}/status`);
+                const response = await axios.get(`${SERVER_URL}/audit/${auditId}/status`);
                 if (isOk(response)) {
                     resolve(response.data);
                     clearInterval(pollInterval);
@@ -38,9 +39,9 @@ export async function pollSearchResults(url: string, auditId: string): Promise<a
     });
 }
 
-export async function validateRemoteServer(url: string): Promise<boolean> {
+export async function validateRemoteServer(): Promise<boolean> {
     try {
-        const response = await axios.get(`${url}`);
+        const response = await axios.get(`${SERVER_URL}`);
         return isOk(response);
     } catch (err) {
         return false;

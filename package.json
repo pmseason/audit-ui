@@ -1,9 +1,9 @@
 {
-  "name": "pm-szn-audit-ui",
+  "name": "audit-ui",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://mrinal-c.github.io/pm-szn-audit-ui/",
+  "homepage": "",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
-    "@mrinal-c/ai-job-scraper": "^1.0.8",
+    "@pmseason/ai-job-scraper": "^1.0.9",
     "@types/node": "^22.13.4",
     "@types/react": "^19.0.8",
     "@types/react-csv": "^1.1.10",

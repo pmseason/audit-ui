@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { SearchConfig } from "@mrinal-c/ai-job-scraper";
+import { SearchConfig } from "@pmseason/ai-job-scraper";
 import { LucideTrash2 } from "lucide-react";
 import { useContext } from "react";
 import { AppContext } from "@/contexts/AppContext";

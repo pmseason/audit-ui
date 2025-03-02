@@ -1,4 +1,4 @@
-import { SearchConfig } from "@mrinal-c/ai-job-scraper";
+import { SearchConfig } from "@pmseason/ai-job-scraper";
 
 export const downloadFile = (configs: SearchConfig[]) => {
 

@@ -1,21 +1,32 @@
-import { SearchConfig, SearchResult, SearchSource } from "@mrinal-c/ai-job-scraper";
+import { SearchConfig, SearchResult, SearchSource } from "@pmseason/ai-job-scraper";
 
+
+//global app state
 export type GlobalState = {
+    //dynamic supported sources fetched from server to display in form
     supportedSources: SearchSource[];
-    searchConfigs: SearchConfig[];
-    currentAuditId?: string;
-    searchResults: SearchResult[];
-    serverUrl: string;
-    setSupportedSources: (sources: SearchSource[]) => void;
+
+    //holds all current user-added search configs
+    searchConfigData: SearchConfigData[];
     addToConfig: (config: SearchConfig) => void;
     removeFromConfig: (index: number) => void;
+    includeInNextSearch: (index: number) => void;
+    excludeFromNextSearch: (index: number) => void;
+    setSearchConfigs: (configs: SearchConfig[], overwrite: boolean) => void;
+
+    //audit id if running, empty if not
+    currentAuditId?: string;
     setCurrentAuditId: (id: string) => void;
+
+    //accumulates all search results retrieved, without merging (duplicates allowed)
+    searchResults: SearchResult[];
     addToSearchResults: (results: SearchResult[]) => void;
-    addToNextSearch: (index: number) => void;
-    removeFromNextSearch: (index: number) => void;
-    getSearchableConfigs: () => SearchConfig[];
-    setSearchConfigs: (configs: SearchConfig[]) => void;
-    setServerUrl: (url: string) => void;
+}
+
+//wrapper around the config for ui-specific metadata
+export type SearchConfigData = {
+    config: SearchConfig;
+    includeInNextSearch: boolean;
 }
 
 export type CSVSearchResult = {

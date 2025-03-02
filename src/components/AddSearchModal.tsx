@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SearchConfig, SearchSource } from "@mrinal-c/ai-job-scraper";
+import { SearchConfig, SearchSource } from "@pmseason/ai-job-scraper";
 import CustomDialog from "./ui/custom-dialog";
 import ConditionsInput from "./ui/conditions-input";
 import { GlobalState } from "@/types/types";

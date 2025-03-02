@@ -1,10 +1,11 @@
 import { getSupportedSources } from "@/api/api";
 import { AppContext } from "@/contexts/AppContext";
+import { SearchConfigData } from "@/types/types";
 import {
   SearchConfig,
   SearchResult,
   SearchSource,
-} from "@mrinal-c/ai-job-scraper";
+} from "@pmseason/ai-job-scraper";
 import { ReactNode, useEffect, useState } from "react";
 
 interface Props {
@@ -14,97 +15,79 @@ interface Props {
 export function GlobalStateProvider({ children }: Props) {
   //local state, this is put into global context
   const [supportedSources, setSupportedSources] = useState<SearchSource[]>([]);
-  const [searchConfigs, _setSearchConfigs] = useState<SearchConfig[]>([]);
-  const [currentAuditId, setCurrentAuditId] = useState("");
+  const [searchConfigData, setSearchConfigData] = useState<SearchConfigData[]>(
+    []
+  );
+  const [currentAuditId, setCurrentAuditId] = useState<string | undefined>();
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const [includeFlags, setIncludeFlags] = useState<boolean[]>([]);
-  const [serverUrl, _setServerUrl] = useState("");
 
   //on first load
   useEffect(() => {
     init();
   }, []);
 
-  const init = () => {};
+  //on page load, fetch updated sources to show in the form
+  const init = () => {
+    getSupportedSources().then(setSupportedSources);
+  };
 
-  const isEquals = (a: SearchConfig, b: SearchConfig) => {
-    return (
-      a.scrapeFrom.name === b.scrapeFrom.name &&
-      a.scrapeFrom.url === b.scrapeFrom.url &&
-      a.roleType === b.roleType &&
-      a.aiQuery === b.aiQuery
+  /////////////////////SEARCH CONFIG//////////////////////
+  //add a single new config to the list
+  const addToConfig = (config: SearchConfig) => {
+    //default to search in the next run
+    setSearchConfigData([
+      ...searchConfigData,
+      { config, includeInNextSearch: true },
+    ]);
+  };
+
+  //remove a single config from the list
+  const removeFromConfig = (index: number) => {
+    setSearchConfigData((prevConfigs) =>
+      prevConfigs.filter((_, i) => i !== index)
     );
   };
 
-  const addToSearchResults = (newResults: SearchResult[]) => {
-    const mergedResults = [...newResults];
-
-    searchResults.forEach((result) => {
-      if (
-        !mergedResults.some((existingResult) =>
-          isEquals(existingResult.searchConfig!, result.searchConfig!)
-        )
-      ) {
-        mergedResults.push(result);
-      }
-    });
-    setSearchResults(mergedResults);
+  //include a specific search in the next search
+  const includeInNextSearch = (index: number) => {
+    searchConfigData[index].includeInNextSearch = true;
   };
 
-  const addToConfig = (config: SearchConfig) => {
-    setSearchConfigs([...searchConfigs, config]);
-    setIncludeFlags([...includeFlags, true]);
+  //exclude a specific search from the next search
+  const excludeFromNextSearch = (index: number) => {
+    searchConfigData[index].includeInNextSearch = false;
   };
 
-  const removeFromConfig = (index: number) => {
-    const updatedConfigs = [...searchConfigs];
-    const updatedFlags = [...includeFlags];
-    updatedConfigs.splice(index, 1);
-    updatedFlags.splice(index, 1);
-    setSearchConfigs(updatedConfigs);
-    setIncludeFlags(updatedFlags);
+  //set global search config from user-uploaded file, user can decide if it overwrites or concats
+  const setSearchConfigs = (configs: SearchConfig[], overwrite: boolean) => {
+    setSearchConfigData((prevConfigs) => [
+      ...(overwrite ? [] : prevConfigs),
+      ...configs.map((config) => ({ config, includeInNextSearch: true })),
+    ]);
   };
 
-  const addToNextSearch = (index: number) => {
-    includeFlags[index] = true;
-  };
-
-  const removeFromNextSearch = (index: number) => {
-    includeFlags[index] = false;
-  };
-
-  const getSearchableConfigs = () => {
-    return searchConfigs.filter((_, index) => includeFlags[index]);
-  };
-
-  const setSearchConfigs = (configs: SearchConfig[]) => {
-    _setSearchConfigs(configs)
-    setIncludeFlags(new Array(configs.length).fill(true))
-  }
-
-  const setServerUrl = (url: string) => {
-    _setServerUrl(url);
-    getSupportedSources(url).then(setSupportedSources).catch(console.error);
+  /////////////////////SEARCH RESULTS//////////////////////
+  const addToSearchResults = (results: SearchResult[]) => {
+    setSearchResults((prevResults) => [...prevResults, ...results]);
   };
 
   return (
     <AppContext.Provider
       value={{
         supportedSources,
-        searchConfigs,
-        currentAuditId,
-        searchResults,
-        serverUrl,
+
+        searchConfigData,
         addToConfig,
         removeFromConfig,
-        setSupportedSources,
-        setCurrentAuditId,
-        addToSearchResults,
-        addToNextSearch,
-        removeFromNextSearch,
-        getSearchableConfigs,
+        includeInNextSearch,
+        excludeFromNextSearch,
         setSearchConfigs,
-        setServerUrl,
+
+        currentAuditId,
+        setCurrentAuditId,
+        
+        searchResults,
+        addToSearchResults
       }}
     >
       {children}
