@@ -1,21 +1,12 @@
-import { useContext } from "react";
 import Header from "./components/Header";
 import ConfigTable from "./components/ConfigTable";
-import { GlobalState } from "./types/types";
-import { AppContext } from "./contexts/AppContext";
 import { StartSearch } from "./components/StartSearch";
 import ActionsMenu from "./components/ActionsMenu";
-import AddSearchConfigModal from "./components/AddSearchModal";
+import SearchConfigForm from "./components/SearchConfigForm";
 import { Button } from "./components/ui/button";
 import { LucidePlusCircle } from "lucide-react";
-import ServerInput from "./components/ServerInput";
 
 function App() {
-  //global app state
-  const { supportedSources, searchConfigs } = useContext(
-    AppContext
-  ) as GlobalState;
-
   return (
     <>
       <Header />
@@ -24,8 +15,7 @@ function App() {
         {true ? (
           <>
             <section className="w-full flex flex-row justify-between items-center">
-              <AddSearchConfigModal
-                supportedSources={supportedSources}
+              <SearchConfigForm
                 triggerIcon={
                   <Button>
                     {" "}
@@ -37,11 +27,10 @@ function App() {
 
               <StartSearch />
             </section>
-            <ConfigTable configs={searchConfigs} />
+            <ConfigTable />
           </>
         ) : (
           <div className="w-full flex justify-center">
-            <ServerInput />
           </div>
         )}
       </main>

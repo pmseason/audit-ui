@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
-    "@pmseason/ai-job-scraper": "^1.0.9",
+    "@pmseason/ai-job-scraper": "^1.0.11",
     "@types/node": "^22.13.4",
     "@types/react": "^19.0.8",
     "@types/react-csv": "^1.1.10",

@@ -1,6 +1,9 @@
+import { SearchConfigData } from "@/types/types";
 import { SearchConfig } from "@pmseason/ai-job-scraper";
 
-export const downloadFile = (configs: SearchConfig[]) => {
+export const downloadFile = (searchConfigData: SearchConfigData[]) => {
+
+    const configs = searchConfigData.map(datum => datum.config);
 
     // create file in browser
     const fileName = "search-configuration";

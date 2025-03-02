@@ -33,11 +33,11 @@ export function GlobalStateProvider({ children }: Props) {
 
   /////////////////////SEARCH CONFIG//////////////////////
   //add a single new config to the list
-  const addToConfig = (config: SearchConfig) => {
+  const addToConfig = (config: SearchConfig, supportedSource?: SearchSource) => {
     //default to search in the next run
     setSearchConfigData([
       ...searchConfigData,
-      { config, includeInNextSearch: true },
+      { config, supportedSource, includeInNextSearch: true },
     ]);
   };
 
@@ -85,9 +85,9 @@ export function GlobalStateProvider({ children }: Props) {
 
         currentAuditId,
         setCurrentAuditId,
-        
+
         searchResults,
-        addToSearchResults
+        addToSearchResults,
       }}
     >
       {children}

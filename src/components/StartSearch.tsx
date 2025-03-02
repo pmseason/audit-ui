@@ -1,43 +1,36 @@
 import { useContext } from "react";
 import { Button } from "./ui/button";
-import { beginSearch, pollSearchResults } from "@/api/api";
+import { beginSearch } from "@/api/api";
 import { AppContext } from "@/contexts/AppContext";
 import { GlobalState } from "@/types/types";
 import { toast } from "sonner";
 
 export function StartSearch() {
   //global app state
-  const {
-    setCurrentAuditId,
-    addToSearchResults,
-    getSearchableConfigs,
-    serverUrl,
-  } = useContext(AppContext) as GlobalState;
+  const { addToSearchResults, searchConfigData } = useContext(
+    AppContext
+  ) as GlobalState;
 
   const beginAudit = async () => {
-    //start a search, receive auditid on success
-    const configs = getSearchableConfigs();
-    const id = await beginSearch(serverUrl, configs);
-    if (!id) return;
+    //filter to all configs that are included
+    const configs = searchConfigData
+      .filter((configData) => configData.includeInNextSearch)
+      .map((configData) => configData.config);
 
-    //set global audit id
-    setCurrentAuditId(id);
-    //start polling for searchResults
-    const searchStatus = pollSearchResults(serverUrl, id);
+    //start search in the background, receive a promise
+    const searchStatus = beginSearch(configs);
+
     toast.promise(searchStatus, {
       loading: "Started an audit...",
       success: "Audit has successfully run!",
-      error: "An error has occurred, sorry",
+      error:
+        "An error has occurred, sorry. Did you connect to the server beforehand? Reach out to Mrinal if this continues to happen",
     });
-    searchStatus.then(addToSearchResults);
+    searchStatus.then(addToSearchResults).catch();
   };
 
   return (
     <span className="flex flex-row gap-3">
-      {/* <Input
-        value={chromeUrl}
-        onChange={(e) => setChromeUrl(e.target.value)}
-      ></Input> */}
       <Button type="button" onClick={beginAudit}>
         Begin Audit Search
       </Button>

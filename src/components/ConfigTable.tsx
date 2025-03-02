@@ -6,21 +6,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { SearchConfig } from "@pmseason/ai-job-scraper";
 import { LucideTrash2 } from "lucide-react";
 import { useContext } from "react";
 import { AppContext } from "@/contexts/AppContext";
 import { GlobalState } from "@/types/types";
 import { Checkbox } from "./ui/checkbox";
 
-interface ConfigTableProps {
-  configs: SearchConfig[];
-}
-
-const ConfigTable: React.FC<ConfigTableProps> = ({ configs }) => {
+const ConfigTable: React.FC = () => {
   //global app state
-  const { removeFromConfig, addToNextSearch, removeFromNextSearch } =
-    useContext(AppContext) as GlobalState;
+  const {
+    removeFromConfig,
+    includeInNextSearch,
+    excludeFromNextSearch,
+    searchConfigData,
+  } = useContext(AppContext) as GlobalState;
 
   return (
     <Table>
@@ -34,22 +33,24 @@ const ConfigTable: React.FC<ConfigTableProps> = ({ configs }) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {configs.length > 0 ? (
-          configs.map((config, index) => (
+        {searchConfigData.length > 0 ? (
+          searchConfigData.map((configData, index) => (
             <TableRow key={index}>
               <TableCell>
                 <Checkbox
                   className="border-black"
                   defaultChecked={true}
                   onCheckedChange={(checked) => {
-                    if (checked) addToNextSearch(index);
-                    else removeFromNextSearch(index);
+                    if (checked) includeInNextSearch(index);
+                    else excludeFromNextSearch(index);
                   }}
                 />
               </TableCell>
-              <TableCell>{config.scrapeFrom.name}</TableCell>
-              <TableCell>{new URL(config.scrapeFrom.url).hostname}</TableCell>
-              <TableCell>{config.roleType}</TableCell>
+              <TableCell>{configData.config.scrapeFrom.name}</TableCell>
+              <TableCell>
+                {new URL(configData.config.scrapeFrom.url).hostname}
+              </TableCell>
+              <TableCell>{configData.config.roleType}</TableCell>
               <TableCell>
                 <span className="flex flex-row gap-4">
                   <button type="button" onClick={() => removeFromConfig(index)}>

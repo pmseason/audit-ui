@@ -8,7 +8,7 @@ export type GlobalState = {
 
     //holds all current user-added search configs
     searchConfigData: SearchConfigData[];
-    addToConfig: (config: SearchConfig) => void;
+    addToConfig: (config: SearchConfig, supportedSource?: SearchSource) => void;
     removeFromConfig: (index: number) => void;
     includeInNextSearch: (index: number) => void;
     excludeFromNextSearch: (index: number) => void;
@@ -27,6 +27,7 @@ export type GlobalState = {
 export type SearchConfigData = {
     config: SearchConfig;
     includeInNextSearch: boolean;
+    supportedSource?: SearchSource;
 }
 
 export type CSVSearchResult = {

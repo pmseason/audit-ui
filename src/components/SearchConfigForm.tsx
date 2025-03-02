@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext, useState } from "react";
+import { ReactNode, useContext, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,31 +18,31 @@ import { GlobalState } from "@/types/types";
 import { AppContext } from "@/contexts/AppContext";
 import { SimpleTooltip } from "./ui/simple-tooltip";
 
-interface AddSearchConfigModalProps {
-  supportedSources: SearchSource[];
-  searchConfig?: SearchConfig;
+interface Props {
   triggerIcon: ReactNode;
 }
 
-const AddSearchConfigModal: React.FC<AddSearchConfigModalProps> = ({
-  supportedSources,
-  triggerIcon,
-}) => {
+const SearchConfigForm = ({ triggerIcon }: Props) => {
   //local state
   const [isOpen, setIsOpen] = useState(false);
-  const [searchSource, setSearchSource] = useState<SearchSource | undefined>(
+  const [supportedSource, setSupportedSource] = useState<SearchSource | undefined>(
     undefined
   );
 
   //global app state
-  const { addToConfig } = useContext(AppContext) as GlobalState;
+  const { addToConfig, supportedSources } = useContext(
+    AppContext
+  ) as GlobalState;
 
   const searchConfigSchema = z.object({
     scrapeFrom: z.object({
       url: z
         .string()
         .url("Invalid URL")
-        .startsWith(searchSource?.url ?? "", "URL must start with the matching url from the source menu"),
+        .startsWith(
+          supportedSource?.url ?? "",
+          "URL must start with the matching url from the source menu"
+        ),
       name: z.string().min(1, "Source Name is required"),
     }),
     roleType: z.enum(["apm", "internship"]),
@@ -60,7 +60,7 @@ const AddSearchConfigModal: React.FC<AddSearchConfigModalProps> = ({
 
   const clearForm = () => {
     reset();
-    setSearchSource(undefined);
+    setSupportedSource(undefined);
   };
 
   const handleFormSubmit = (data: SearchConfig) => {
@@ -96,10 +96,10 @@ const AddSearchConfigModal: React.FC<AddSearchConfigModalProps> = ({
                       const source = supportedSources.find(
                         (source) => source.name === value
                       );
-                      setSearchSource(source);
+                      setSupportedSource(source);
                       setValue("scrapeFrom.name", value);
                     } else {
-                      setSearchSource({ name: "other", url: "" });
+                      setSupportedSource({ name: "other", url: "" });
                     }
                   }}
                 >
@@ -131,7 +131,7 @@ const AddSearchConfigModal: React.FC<AddSearchConfigModalProps> = ({
                   <label className="block text-sm font-medium">Name</label>
                   <SimpleTooltip message="Name of the source we are searching from" />
                 </span>
-                {searchSource?.name === "other" ? (
+                {supportedSource?.name === "other" ? (
                   <Input
                     {...register("scrapeFrom.name")}
                     placeholder="Uber, Walmart, Jobright, etc."
@@ -139,7 +139,7 @@ const AddSearchConfigModal: React.FC<AddSearchConfigModalProps> = ({
                   />
                 ) : (
                   <p className="text-gray-400 border border-solid py-1 px-3 rounded-sm text-sm">
-                    {searchSource?.name ?? "Uber, Walmart, Jobright, etc."}
+                    {supportedSource?.name ?? "Uber, Walmart, Jobright, etc."}
                   </p>
                 )}
                 <p className="text-red-500 text-xs">
@@ -215,7 +215,7 @@ const AddSearchConfigModal: React.FC<AddSearchConfigModalProps> = ({
             >
               Cancel
             </Button> */}
-            <Button type="submit" disabled={searchSource === undefined}>
+            <Button type="submit" disabled={supportedSource === undefined}>
               Save
             </Button>
           </section>
@@ -225,4 +225,4 @@ const AddSearchConfigModal: React.FC<AddSearchConfigModalProps> = ({
   );
 };
 
-export default AddSearchConfigModal;
+export default SearchConfigForm;

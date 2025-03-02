@@ -5,12 +5,12 @@ import { AppContext } from "@/contexts/AppContext";
 import { GlobalState } from "@/types/types";
 import { prepareForCsv } from "@/api/csv";
 import { LucideDownload, LucideWrench } from "lucide-react";
-import UploadConfigModal from "./UploadConfigModal";
+import UploadConfigForm from "./UploadConfigForm";
 import { downloadFile } from "@/api/downloader";
 
 export default function ActionsMenu() {
   //global app state
-  const { searchResults, searchConfigs } = useContext(
+  const { searchResults, searchConfigData } = useContext(
     AppContext
   ) as GlobalState;
 
@@ -27,13 +27,13 @@ export default function ActionsMenu() {
           {`Download ${downloadableResults.length} Results`}
         </CSVLink>
       </Button>
-      <Button onClick={() => downloadFile(searchConfigs)}>
+      <Button onClick={() => downloadFile(searchConfigData)}>
         <LucideWrench />
         Download Configuration
       </Button>
       <Button>
         <LucideWrench />
-        <UploadConfigModal triggerIcon={"Upload Configuration"} />
+        <UploadConfigForm triggerIcon={"Upload Configuration"} />
       </Button>
     </section>
   );
