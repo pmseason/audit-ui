@@ -1,5 +1,4 @@
 import { SearchConfigData } from "@/types/types";
-import { SearchConfig } from "@pmseason/ai-job-scraper";
 
 export const downloadFile = (searchConfigData: SearchConfigData[]) => {
 

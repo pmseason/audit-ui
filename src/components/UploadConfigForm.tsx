@@ -4,7 +4,6 @@ import { Input } from "./ui/input";
 import { AppContext } from "@/contexts/AppContext";
 import { GlobalState } from "@/types/types";
 import { searchConfigListSchema } from "@/types/zod";
-import { Checkbox } from "./ui/checkbox";
 
 interface Props {
   triggerIcon: ReactNode;

@@ -1,5 +1,5 @@
 import { SearchConfig, SearchSource } from '@pmseason/ai-job-scraper';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -50,7 +50,7 @@ export async function beginSearch(searchConfigs: SearchConfig[]): Promise<any> {
 
             // Set a timeout to stop polling after a maximum runtime
             const maxRuntime = 120000; // 1 minute
-            const timeout = setTimeout(() => {
+            setTimeout(() => {
                 reject("Audit timed out...sorry....");
                 clearInterval(pollInterval);
             }, maxRuntime);

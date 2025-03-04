@@ -11,7 +11,6 @@ function App() {
     <>
       <Header />
       <main className="px-4 flex flex-col items-start gap-4">
-        {/* leave as placeholder for future password prompt or something */}
         {true ? (
           <>
             <section className="w-full flex flex-row justify-between items-center">
