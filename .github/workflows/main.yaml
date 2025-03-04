@@ -46,7 +46,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_SERVER_URL: 34.46.77.59
+          VITE_SERVER_URL: http://34.46.77.59
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
