@@ -1,6 +1,8 @@
 import { SearchConfig, SearchResult, SearchSource } from "@pmseason/ai-job-scraper";
 
 
+export type ServerStatus = "down" | "pingable" | "auditable" | "unknown"
+
 //global app state
 export type GlobalState = {
     //dynamic supported sources fetched from server to display in form
@@ -21,6 +23,10 @@ export type GlobalState = {
     //accumulates all search results retrieved, without merging (duplicates allowed)
     searchResults: SearchResult[];
     addToSearchResults: (results: SearchResult[]) => void;
+
+    //server status
+    serverStatus: ServerStatus;
+    setServerStatus: (status: ServerStatus) => void;
 }
 
 //wrapper around the config for ui-specific metadata

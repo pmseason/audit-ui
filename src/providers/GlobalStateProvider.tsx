@@ -1,6 +1,6 @@
-import { getSupportedSources } from "@/api/api";
+import { checkServerStatus, getSupportedSources } from "@/api/api";
 import { AppContext } from "@/contexts/AppContext";
-import { SearchConfigData } from "@/types/types";
+import { SearchConfigData, ServerStatus } from "@/types/types";
 import {
   SearchConfig,
   SearchResult,
@@ -20,6 +20,7 @@ export function GlobalStateProvider({ children }: Props) {
   );
   const [currentAuditId, setCurrentAuditId] = useState<string | undefined>();
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [serverStatus, setServerStatus] = useState<ServerStatus>("unknown");
 
   //on first load
   useEffect(() => {
@@ -29,6 +30,7 @@ export function GlobalStateProvider({ children }: Props) {
   //on page load, fetch updated sources to show in the form
   const init = () => {
     getSupportedSources().then(setSupportedSources);
+    checkServerStatus().then(setServerStatus);
   };
 
   /////////////////////SEARCH CONFIG//////////////////////
@@ -88,6 +90,9 @@ export function GlobalStateProvider({ children }: Props) {
 
         searchResults,
         addToSearchResults,
+
+        serverStatus,
+        setServerStatus
       }}
     >
       {children}

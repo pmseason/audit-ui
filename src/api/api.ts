@@ -1,3 +1,4 @@
+import { ServerStatus } from '@/types/types';
 import { SearchConfig, SearchSource } from '@pmseason/ai-job-scraper';
 import axios from 'axios';
 
@@ -10,6 +11,28 @@ export async function getSupportedSources(): Promise<SearchSource[]> {
     } catch (error) {
         console.error("Error fetching supported sources:", error);
         return []
+    }
+}
+
+export async function checkServerStatus(): Promise<ServerStatus> {
+    try {
+        const r1 = await axios.get(`${SERVER_URL}`); //if this fails, return "down"
+
+        if (r1.status !== 200) {
+            return "down";
+        }
+
+        const r2 = await axios.get(`${SERVER_URL}/audit/test`); //if this fails, return "pingable"
+
+        if (r2.status !== 200) {
+            return "pingable";
+        }
+
+        return "auditable";
+
+    } catch (error) {
+        console.error("Error checking server status:", error);
+        return "down";
     }
 }
 

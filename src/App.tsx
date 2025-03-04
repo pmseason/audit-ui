@@ -5,6 +5,7 @@ import ActionsMenu from "./components/ActionsMenu";
 import SearchConfigForm from "./components/SearchConfigForm";
 import { Button } from "./components/ui/button";
 import { LucidePlusCircle } from "lucide-react";
+import { ServerStatus } from "./components/ServerStatus";
 
 function App() {
   return (
@@ -24,13 +25,15 @@ function App() {
               />
               <ActionsMenu />
 
-              <StartSearch />
+              <div className="flex flex-col gap-2 items-end">
+                <ServerStatus />
+                <StartSearch />
+              </div>
             </section>
             <ConfigTable />
           </>
         ) : (
-          <div className="w-full flex justify-center">
-          </div>
+          <div className="w-full flex justify-center"></div>
         )}
       </main>
     </>
