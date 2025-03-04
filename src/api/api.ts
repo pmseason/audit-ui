@@ -1,11 +1,11 @@
 import { SearchConfig, SearchSource } from '@pmseason/ai-job-scraper';
 import axios from 'axios';
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export async function getSupportedSources(): Promise<SearchSource[]> {
     try {
-        const response = await axios.get<SearchSource[]>(`${SERVER_URL}/audit/supported`);
+        const response = await axios.get<SearchSource[]>(`${BACKEND_URL}/audit/supported`);
         return response.data;
     } catch (error) {
         console.error("Error fetching supported sources:", error);
@@ -18,7 +18,7 @@ export async function beginSearch(searchConfigs: SearchConfig[]): Promise<any> {
     return new Promise(async (resolve, reject) => {
         let pollInterval: NodeJS.Timeout | undefined;
         try {
-            const response = await axios.post(`${SERVER_URL}/audit/start`, {
+            const response = await axios.post(`${BACKEND_URL}/audit/start`, {
                 searchConfigs: searchConfigs
             });
 
@@ -26,7 +26,7 @@ export async function beginSearch(searchConfigs: SearchConfig[]): Promise<any> {
 
             pollInterval = setInterval(async () => {
                 try {
-                    const response = await axios.get(`${SERVER_URL}/audit/${auditId}/status`);
+                    const response = await axios.get(`${BACKEND_URL}/audit/${auditId}/status`);
 
                     //response has message?, error?, data?, and status fields
                     const { error, data, status } = response.data;
