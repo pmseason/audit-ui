@@ -30,10 +30,8 @@ export function StartSearch() {
   };
 
   return (
-    <span className="flex flex-row gap-3">
-      <Button type="button" onClick={beginAudit}>
-        Begin Audit Search
-      </Button>
-    </span>
+    <Button type="button" onClick={beginAudit}>
+      Begin Audit Search
+    </Button>
   );
 }
