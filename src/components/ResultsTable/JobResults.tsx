@@ -1,4 +1,4 @@
-import { Job, ProcessedJob, SearchResult } from "@pmseason/ai-job-scraper";
+import { ProcessedJob, SearchResult } from "@pmseason/ai-job-scraper";
 import {
     Table,
     TableBody,

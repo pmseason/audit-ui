@@ -17,7 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import JobResults from "./JobResults"
-import { Job, SearchResult } from "@pmseason/ai-job-scraper"
+import { SearchResult } from "@pmseason/ai-job-scraper"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -31,7 +31,7 @@ export function DataTable<TData, TValue>({
   const table = useReactTable({
     data,
     columns,
-    getRowCanExpand: (row) => true,
+    getRowCanExpand: () => true,
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel()
   })
