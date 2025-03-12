@@ -7,9 +7,8 @@ import { StartSearch } from "@/components/StartSearch";
 import { Button } from "@/components/ui/button";
 import { AppContext } from "@/contexts/AppContext";
 import { GlobalState } from "@/types/types";
-import { ArrowRight, LucidePlusCircle } from "lucide-react";
+import { LucidePlusCircle } from "lucide-react";
 import { useContext } from "react";
-import { Link } from "react-router";
 
 function Dashboard() {
   const {
@@ -17,7 +16,7 @@ function Dashboard() {
     excludeFromNextSearch,
     removeFromConfig,
     searchData,
-    toggleAll
+    toggleAll,
   } = useContext(AppContext) as GlobalState;
   return (
     <>
@@ -44,7 +43,9 @@ function Dashboard() {
               </div>
             </section>
 
-            <Button type="button" variant="secondary" onClick={toggleAll}>Toggle All</Button>
+            <Button type="button" variant="secondary" onClick={toggleAll}>
+              Toggle All
+            </Button>
             <DataTable
               columns={getColumns(
                 searchData,

@@ -1,4 +1,4 @@
-import { ProcessedJob, SearchResult } from "@pmseason/ai-job-scraper";
+import { ProcessedJob } from "@pmseason/ai-job-scraper";
 import {
   Table,
   TableBody,
@@ -14,7 +14,8 @@ interface Props {
 }
 
 function JobResults({ search }: Props) {
-  const processedJobs: ProcessedJob[] = search.results?.jobs as ProcessedJob[] ?? [];
+  const processedJobs: ProcessedJob[] =
+    (search.results?.jobs as ProcessedJob[]) ?? [];
 
   return (
     <div>

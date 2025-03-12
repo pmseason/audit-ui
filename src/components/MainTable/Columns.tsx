@@ -1,7 +1,12 @@
-import { SearchResult } from "@pmseason/ai-job-scraper";
 import { ColumnDef } from "@tanstack/react-table";
-import { LucideArrowDown, LucideArrowRight, LucideCheck, LucideLoader, LucideTrash2, LucideX } from "lucide-react";
-import { Button } from "../ui/button";
+import {
+  LucideArrowDown,
+  LucideArrowRight,
+  LucideCheck,
+  LucideLoader,
+  LucideTrash2,
+  LucideX,
+} from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 import { Search, SearchStatus } from "@/types/types";
 
@@ -66,22 +71,22 @@ export const getColumns = (
     },
   },
   {
-      header: "Status",
-      accessorKey: "status",
-      cell({ row }) {
-          const { status } = row.original;
-          switch (status) {
-            case SearchStatus.Error:
-              return <LucideX color="red"/>
-            case SearchStatus.Success:
-              return <LucideCheck color="green" />;
-            case SearchStatus.InProgress:
-              return <LucideLoader />;
-            default:
-              return "----";
-          }
-      },
+    header: "Status",
+    accessorKey: "status",
+    cell({ row }) {
+      const { status } = row.original;
+      switch (status) {
+        case SearchStatus.Error:
+          return <LucideX color="red" />;
+        case SearchStatus.Success:
+          return <LucideCheck color="green" />;
+        case SearchStatus.InProgress:
+          return <LucideLoader />;
+        default:
+          return "----";
+      }
     },
+  },
   {
     header: "Actions",
     cell({ row }) {
