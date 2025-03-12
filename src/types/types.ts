@@ -7,7 +7,7 @@ export type GlobalState = {
     supportedSources: SearchSource[];
 
     //holds all current user-added search configs
-    searchConfigData: SearchConfigData[];
+    searchData: Search[];
     addToConfig: (config: SearchConfig, supportedSource?: SearchSource) => void;
     removeFromConfig: (index: number) => void;
     includeInNextSearch: (index: number) => void;
@@ -19,15 +19,26 @@ export type GlobalState = {
     setCurrentAuditId: (id: string) => void;
 
     //accumulates all search results retrieved, without merging (duplicates allowed)
-    searchResults: SearchResult[];
-    addToSearchResults: (results: SearchResult[]) => void;
+    addSearchResult: (index: number, error: boolean, result?: SearchResult) => void;
+
+    toggleAll: () => void;
+
+    startLoading: (indices: number[]) => void
 }
 
 //wrapper around the config for ui-specific metadata
-export type SearchConfigData = {
+export enum SearchStatus {
+    NotRun = "not-run",
+    Success = "success",
+    Error = "error",
+    InProgress = "in-progress"
+}
+export type Search = {
     config: SearchConfig;
     includeInNextSearch: boolean;
     supportedSource?: SearchSource;
+    results?: SearchResult;
+    status: SearchStatus;
 }
 
 export type CSVSearchResult = {

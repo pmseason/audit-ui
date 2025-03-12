@@ -4,29 +4,39 @@ import { beginSearch } from "@/api/api";
 import { AppContext } from "@/contexts/AppContext";
 import { GlobalState } from "@/types/types";
 import { toast } from "sonner";
+import { SearchResult } from "@pmseason/ai-job-scraper";
 
 export function StartSearch() {
   //global app state
-  const { addToSearchResults, searchConfigData } = useContext(
+  const { addSearchResult, searchData, startLoading } = useContext(
     AppContext
   ) as GlobalState;
 
+  const reportCompletion = (index: number, error: boolean, result?: SearchResult) => {
+    if (error) addSearchResult(index, true)
+    if (result) addSearchResult(index, false, result)
+  }
+
   const beginAudit = async () => {
     //filter to all configs that are included
-    const configs = searchConfigData
-      .filter((configData) => configData.includeInNextSearch)
-      .map((configData) => configData.config);
+    const configs = searchData
+      .filter((search) => search.includeInNextSearch)
+      .map((search) => search.config);
+
+    const indices = searchData
+      .map((search, index) => search.includeInNextSearch ? index : -1)
+      .filter(index => index !== -1);
 
     //start search in the background, receive a promise
-    const searchStatus = beginSearch(configs);
+    startLoading(indices)
+    const searchStatus = beginSearch(configs, indices, reportCompletion);
 
     toast.promise(searchStatus, {
-      loading: "Started an audit...",
+      loading: "Running an audit...",
       success: "Audit has successfully run!",
       error:
         "An error has occurred, sorry. Did you connect to the server beforehand? Reach out to Mrinal if this continues to happen",
     });
-    searchStatus.then(addToSearchResults).catch();
   };
 
   return (

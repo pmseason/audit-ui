@@ -17,7 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import JobResults from "./JobResults"
-import { SearchResult } from "@pmseason/ai-job-scraper"
+import { Search } from "@/types/types"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -36,8 +36,9 @@ export function DataTable<TData, TValue>({
     getExpandedRowModel: getExpandedRowModel()
   })
 
+  console.log(data);
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border w-full">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -62,7 +63,6 @@ export function DataTable<TData, TValue>({
             table.getRowModel().rows.map((row) => (
               <>
               <TableRow
-                key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
@@ -74,7 +74,7 @@ export function DataTable<TData, TValue>({
               {row.getIsExpanded() && (
                 <TableRow>
                   <TableCell colSpan={row.getVisibleCells().length}>
-                      <JobResults searchResult={row.original as SearchResult} />
+                      <JobResults search={row.original as Search} />
                   </TableCell>
                 </TableRow>
               )}

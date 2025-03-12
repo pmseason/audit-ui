@@ -1,8 +1,8 @@
-import { SearchConfigData } from "@/types/types";
+import { Search } from "@/types/types";
 
-export const downloadFile = (searchConfigData: SearchConfigData[]) => {
+export const downloadFile = (searchData: Search[]) => {
 
-    const configs = searchConfigData.map(datum => datum.config);
+    const configs = searchData.map(datum => datum.config);
 
     // create file in browser
     const fileName = "search-configuration";
