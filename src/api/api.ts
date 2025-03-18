@@ -13,7 +13,7 @@ export async function getSupportedSources(): Promise<SearchSource[]> {
     }
 }
 
-export async function beginSearch(searchConfigs: SearchConfig[], indices: number[], reportCompletion: (index: number, error: boolean, results?: SearchResult[]) => void): Promise<any> {
+export async function beginSearch(searchConfigs: SearchConfig[], indices: number[], reportCompletion: (index: number, error: boolean, results?: SearchResult[]) => void) {
     for (let index = 0; index < searchConfigs.length; index++) {
         const config = searchConfigs[index];
         try {
@@ -67,7 +67,7 @@ async function runOneSearch(config: SearchConfig): Promise<SearchResult[]> {
                 reject("Audit timed out...sorry....");
                 clearInterval(pollInterval);
             }, maxRuntime);
-        } catch (error) {
+        } catch {
             reject("An error occurred... Are you sure you connected to the server beforehand?");
             if (pollInterval) clearInterval(pollInterval);
         }
