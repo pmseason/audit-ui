@@ -93,11 +93,11 @@ export function GlobalStateProvider({ children }: Props) {
   };
 
   /////////////////////SEARCH RESULTS//////////////////////
-  const addSearchResult = (index: number, error: boolean, result?: SearchResult) => {
+  const addSearchResult = (index: number, error: boolean, results?: SearchResult[]) => {
     setSearchData((prevSearchData) =>
       prevSearchData.map((search, i) =>
       i === index
-        ? { ...search, ...(result && { results: result }), status: error ? SearchStatus.Error : SearchStatus.Success }
+        ? { ...search, ...(results && { results: results }), status: error ? SearchStatus.Error : SearchStatus.Success }
         : search
       )
     );

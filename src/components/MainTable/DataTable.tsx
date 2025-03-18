@@ -36,7 +36,6 @@ export function DataTable<TData, TValue>({
     getExpandedRowModel: getExpandedRowModel()
   })
 
-  console.log(data);
   return (
     <div className="rounded-md border w-full">
       <Table>

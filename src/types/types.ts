@@ -19,7 +19,7 @@ export type GlobalState = {
     setCurrentAuditId: (id: string) => void;
 
     //accumulates all search results retrieved, without merging (duplicates allowed)
-    addSearchResult: (index: number, error: boolean, result?: SearchResult) => void;
+    addSearchResult: (index: number, error: boolean, results?: SearchResult[]) => void;
 
     toggleAll: () => void;
 
@@ -37,7 +37,7 @@ export type Search = {
     config: SearchConfig;
     includeInNextSearch: boolean;
     supportedSource?: SearchSource;
-    results?: SearchResult;
+    results?: SearchResult[];
     status: SearchStatus;
 }
 

@@ -13,13 +13,12 @@ export async function getSupportedSources(): Promise<SearchSource[]> {
     }
 }
 
-export async function beginSearch(searchConfigs: SearchConfig[], indices: number[], reportCompletion: (index: number, error: boolean, result?: SearchResult, ) => void): Promise<any> {
+export async function beginSearch(searchConfigs: SearchConfig[], indices: number[], reportCompletion: (index: number, error: boolean, results?: SearchResult[]) => void): Promise<any> {
     for (let index = 0; index < searchConfigs.length; index++) {
         const config = searchConfigs[index];
         try {
             const results = await runOneSearch(config);
-            const result = results.find(result => result.tool == "firecrawl" || result.tool == "scraping+ai")
-            reportCompletion(indices[index], false, result);
+            reportCompletion(indices[index], false, results);
         } catch (error) {
             console.error("Error during search:", error);
             reportCompletion(indices[index], true);

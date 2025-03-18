@@ -12,9 +12,9 @@ export function StartSearch() {
     AppContext
   ) as GlobalState;
 
-  const reportCompletion = (index: number, error: boolean, result?: SearchResult) => {
+  const reportCompletion = (index: number, error: boolean, results?: SearchResult[]) => {
     if (error) addSearchResult(index, true)
-    if (result) addSearchResult(index, false, result)
+    if (results) addSearchResult(index, false, results)
   }
 
   const beginAudit = async () => {

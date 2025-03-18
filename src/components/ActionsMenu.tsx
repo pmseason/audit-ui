@@ -7,15 +7,22 @@ import UploadConfigForm from "./UploadConfigForm";
 import { downloadFile } from "@/api/downloader";
 import { CSVLink } from "react-csv";
 import { prepareForCsv } from "@/api/csv";
+import { SearchResult } from "@pmseason/ai-job-scraper";
 
 export default function ActionsMenu() {
   //global app state
   const { searchData } = useContext(AppContext) as GlobalState;
 
-  const downloadableResults = searchData
-    .filter((search) => search.results && search.results.tool !== "scraping")
-    .map((search) => search.results)
-    .filter((result) => result !== undefined);
+  const downloadableResults: SearchResult[] = [];
+  for (const search of searchData) {
+    const results = search.results;
+    if (!results) continue;
+    results.forEach((result) => {
+      if (result.tool !== "scraping") {
+        downloadableResults.push(result);
+      }
+    });
+  }
   return (
     <section className="flex flex-row gap-2 p-2 border border-black rounded-sm">
       <Button>

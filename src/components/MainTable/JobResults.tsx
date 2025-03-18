@@ -1,4 +1,4 @@
-import { ProcessedJob } from "@pmseason/ai-job-scraper";
+import { Job, ProcessedJob } from "@pmseason/ai-job-scraper";
 import {
   Table,
   TableBody,
@@ -7,18 +7,69 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Search } from "@/types/types";
+import { Search, SearchStatus } from "@/types/types";
+import { LucideMoveRight, LucideX } from "lucide-react";
 
 interface Props {
   search: Search;
 }
 
 function JobResults({ search }: Props) {
+  if (search.status === SearchStatus.Error) {
+    return (
+      <div className="flex items-center justify-center py-4">
+        <LucideX color="red" />
+        <span className="text-red-500 text-sm font-medium">
+          An error occurred while fetching job results. Please try again later.
+        </span>
+      </div>
+    );
+  } else if (search.status === SearchStatus.NotRun) {
+    return (
+      <div className="flex items-center justify-center py-4">
+        <span className="text-gray-500 text-sm font-medium">
+          Job search has not been run yet. Please initiate a search to view
+          results.
+        </span>
+      </div>
+    );
+  } else if (search.status === SearchStatus.InProgress) {
+    return (
+      <div className="flex items-center justify-center py-4">
+        <span className="text-blue-500 text-sm font-medium">
+          Job search is currently in progress. Please wait...
+        </span>
+      </div>
+    );
+  }
+
+  const results = search.results ?? [];
+
+  //firecrawl sends one result back, else both stages of the custom scrape are sent back
+  const isFirecrawl = results.length === 1;
+
+  const firecrawlJobs: ProcessedJob[] = isFirecrawl
+    ? (results[0].jobs as ProcessedJob[])
+    : [];
   const processedJobs: ProcessedJob[] =
-    (search.results?.jobs as ProcessedJob[]) ?? [];
+    (results.find((result) => result.tool !== "scraping")
+      ?.jobs as ProcessedJob[]) ?? [];
+
+  const rawJobs: Job[] =
+    results.find((result) => result.tool === "scraping")?.jobs ?? [];
 
   return (
     <div>
+      {isFirecrawl ? (
+        <p>{`Pulled ${firecrawlJobs.length} jobs from firecrawl`}</p>
+      ) : (
+        <span className="flex flex-row items-center gap-4">
+          <p>{`Scraped ${rawJobs.length} jobs from the website`}</p>
+          <LucideMoveRight />
+          <p>{`${processedJobs.length} jobs left after filtering with AI`}</p>
+        </span>
+      )}
+
       <Table className=" divide-gray-200">
         <TableHeader>
           <TableRow>
