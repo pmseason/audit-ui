@@ -35,18 +35,13 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-      - name: Create .npmrc
-        run: |
-            echo "registry=https://registry.yarnpkg.com/" > .npmrc
-            echo "@pmseason:registry=https://npm.pkg.github.com" >> .npmrc
-            echo "//npm.pkg.github.com/:_authToken=${{ secrets.PAT }}" >> .npmrc
-            echo "always-auth=true" >> .npmrc
       - name: Install dependencies
         run: npm ci
       - name: Build
         run: npm run build
         env:
-          VITE_BACKEND_URL: https://auditbackend.apmseason.com
+          VITE_BACKEND_URL: http://34.46.77.59:5001
+          VITE_IMAGES_CDN_URL: https://images.careerseason.com
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
