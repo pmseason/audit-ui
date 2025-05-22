@@ -40,7 +40,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_BACKEND_URL: http://34.46.77.59:5001
+          VITE_BACKEND_URL: https://audit-backend-537386600621.us-west1.run.app
           VITE_IMAGES_CDN_URL: https://images.careerseason.com
       - name: Setup Pages
         uses: actions/configure-pages@v4
