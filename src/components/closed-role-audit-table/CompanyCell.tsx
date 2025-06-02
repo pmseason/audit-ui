@@ -5,12 +5,11 @@ type CompanyCellProps = {
 };
 
 export const CompanyCell = ({ company }: CompanyCellProps) => {
-    console.log(company);
   return (
     <div className="flex items-center gap-2">
       {company.logo ? (
         <img
-          src={company.logo.url}
+          src={`${import.meta.env.VITE_IMAGES_CDN_URL}/${company.logo.filename_disk}`}
           alt={`${company.name} logo`}
           className="h-6 w-6 rounded-sm object-contain"
         />

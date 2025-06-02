@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/table"
 import { DataTablePagination } from "./data-table-pagination"
 import { Loader2 } from "lucide-react"
+import { useMemo } from "react"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -30,6 +31,8 @@ export function DataTable<TData, TValue>({
   data,
   isLoading = false,
 }: DataTableProps<TData, TValue>) {
+
+  const memoizedColumns = useMemo(() => columns, [columns]);
   const table = useReactTable({
     data,
     columns,

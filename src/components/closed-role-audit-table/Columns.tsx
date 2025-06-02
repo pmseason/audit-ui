@@ -49,10 +49,22 @@ export const columns: ColumnDef<ClosedRoleAuditTask>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
-    header: "ID",
-    cell: ({ row }) => <div className="w-[80px]">{row.original.id}</div>,
+    accessorKey: "updated_at",
+    header: "Last Updated",
+    cell: ({ row }) => {
+      const updatedAt = row.original.updated_at;
+      return (
+        <div className="whitespace-nowrap">
+          {updatedAt ? new Date(updatedAt).toLocaleString() : "N/A"}
+        </div>
+      );
+    },
   },
+  // {
+  //   accessorKey: "id",
+  //   header: "ID",
+  //   cell: ({ row }) => <div className="w-[80px]">{row.original.id}</div>,
+  // },
   {
     accessorKey: "company",
     header: "Company",
@@ -65,7 +77,7 @@ export const columns: ColumnDef<ClosedRoleAuditTask>[] = [
       const job = row.original.job;
       return (
         <div className="flex space-x-2">
-          <a 
+          <a
             href={job.url}
             target="_blank"
             rel="noopener noreferrer"
@@ -120,4 +132,5 @@ export const columns: ColumnDef<ClosedRoleAuditTask>[] = [
       );
     },
   },
+
 ];

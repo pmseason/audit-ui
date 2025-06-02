@@ -67,5 +67,7 @@ export interface ClosedRoleAuditTask {
     result: "open" | "closed" | "unsure";
     justification: string;
     screenshot: string;
+    updated_at: string;
+    created_at: string;
 }
 

@@ -21,7 +21,9 @@ const auditSlice = createSlice({
       state.isLoading = action.payload;
     },
     setClosedRoleTasks: (state, action: PayloadAction<ClosedRoleAuditTask[]>) => {
-      state.closedRoleTasks = action.payload;
+      state.closedRoleTasks = action.payload.sort((a, b) => {
+        return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+      });
     },
     setSelectedTasks: (state, action: PayloadAction<number[]>) => {
       state.selectedTasks = action.payload;
