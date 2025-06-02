@@ -35,7 +35,7 @@ export function DataTable<TData, TValue>({
   const memoizedColumns = useMemo(() => columns, [columns]);
   const table = useReactTable({
     data,
-    columns,
+    columns: memoizedColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   })
