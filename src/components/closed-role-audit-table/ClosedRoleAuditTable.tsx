@@ -31,7 +31,7 @@ export function ClosedRoleAuditTable() {
 
   useEffect(() => {
     const hasInProgressTasks = closedRoleTasks.some(
-      (task) => task.status === AuditStatus.IN_PROGRESS || task.status === AuditStatus.QUEUED
+      (task) => task.status === AuditStatus.IN_PROGRESS || task.status === AuditStatus.PENDING
     );
 
     if (!hasInProgressTasks) return;
@@ -45,10 +45,10 @@ export function ClosedRoleAuditTable() {
   //sort closedRoleTasks to put in progress tasks at the top
   const statusOrder = {
     [AuditStatus.IN_PROGRESS]: 0,
-    [AuditStatus.QUEUED]: 1,
+    [AuditStatus.PENDING]: 1,
     [AuditStatus.FAILED]: 2,
     [AuditStatus.COMPLETED]: 3,
-    [AuditStatus.PENDING]: 4
+    [AuditStatus.NOT_RUN]: 4
   };
 
   const sortedTasks = [...closedRoleTasks].sort((a, b) => {

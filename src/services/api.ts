@@ -17,3 +17,7 @@ export const startClosedRoleAudit = async (taskIds: number[]): Promise<void> => 
 export const createClosedRoleAudit = async (): Promise<void> => {
   await api.post('/audit/create/closed');
 };
+
+export const addOpenRoleSearch = async (task: { url: string, extra_notes?: string }): Promise<void> => {
+  await api.post('/audit/add/open', task);
+};

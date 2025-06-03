@@ -52,7 +52,7 @@ import { Job } from "@/types/jobs";
 
 export enum AuditStatus {
     PENDING = "pending",
-    QUEUED = "queued",
+    NOT_RUN = "not_run",
     COMPLETED = "completed",
     FAILED = "failed",
     IN_PROGRESS = "in_progress"
@@ -67,6 +67,27 @@ export interface ClosedRoleAuditTask {
     result: "open" | "closed" | "unsure";
     justification: string;
     screenshot: string;
+    updated_at: string;
+    created_at: string;
+}
+
+export interface ScrapedJob {
+    id: number;
+    title: string;
+    company: string;
+    location: string;
+    description: string;
+    task: OpenRoleAuditTask;
+    url: string;
+    other: string;
+}
+
+export interface OpenRoleAuditTask {
+    id: number;
+    url: string;
+    extra_notes: string;
+    status: AuditStatus;
+    status_message: string;
     updated_at: string;
     created_at: string;
 }

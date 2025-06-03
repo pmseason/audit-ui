@@ -22,7 +22,7 @@ const statusStyles: Record<AuditStatus, { bg: string; text: string }> = {
     bg: "bg-yellow-100",
     text: "text-yellow-800",
   },
-  queued: {
+  not_run: {
     bg: "bg-gray-100",
     text: "text-gray-800",
   },
@@ -40,7 +40,7 @@ export const StatusCell = ({ status }: StatusCellProps) => {
         "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
         style.bg,
         style.text,
-        status === "in_progress" || status === "queued" && "animate-pulse"
+        status === "in_progress" || status === "not_run" && "animate-pulse"
       )}
     >
       {status}
