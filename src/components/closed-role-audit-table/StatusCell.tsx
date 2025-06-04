@@ -40,7 +40,7 @@ export const StatusCell = ({ status }: StatusCellProps) => {
         "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
         style.bg,
         style.text,
-        status === "in_progress" || status === "not_run" && "animate-pulse"
+        status === "in_progress" || status === "pending" && "animate-pulse"
       )}
     >
       {status}

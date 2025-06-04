@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,14 +10,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
-import { addOpenRoleSearch } from "@/services/api";
+} from "@/components/ui/dialog";
+import { addOpenRoleSearch, getOpenRoleSearch } from "@/services/api";
+import { setOpenRoleTasks } from "@/store/auditSlice";
+import { useAppDispatch } from "@/store/hooks";
 
 interface Props {
   triggerIcon: ReactNode;
 }
 
 const OpenRoleAuditForm = ({ triggerIcon }: Props) => {
+  const [open, setOpen] = useState(false);
+  const dispatch = useAppDispatch();
   const formSchema = z.object({
     url: z.string().url("Invalid URL"),
   });
@@ -38,7 +42,10 @@ const OpenRoleAuditForm = ({ triggerIcon }: Props) => {
   const handleFormSubmit = async (data: { url: string }) => {
     try {
       await addOpenRoleSearch({ url: data.url, extra_notes: "" });
+      const tasks = await getOpenRoleSearch();
+      dispatch(setOpenRoleTasks(tasks));
       clearForm();
+      setOpen(false);
     } catch (error) {
       console.error('Error creating open role audit:', error);
       // You might want to show an error toast here
@@ -46,7 +53,7 @@ const OpenRoleAuditForm = ({ triggerIcon }: Props) => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div>{triggerIcon}</div>
       </DialogTrigger>

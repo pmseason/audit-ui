@@ -1,16 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ClosedRoleAuditTask } from '../types/audit';
+import { ClosedRoleAuditTask, OpenRoleAuditTask } from '../types/audit';
 
 interface AuditState {
   isLoading: boolean;
   closedRoleTasks: ClosedRoleAuditTask[];
-  selectedTasks: number[];
+  openRoleTasks: OpenRoleAuditTask[];
+  selectedClosedRoleTasks: number[];
+  selectedOpenRoleTasks: number[];
 }
 
 const initialState: AuditState = {
   isLoading: false,
   closedRoleTasks: [],
-  selectedTasks: [],
+  openRoleTasks: [],
+  selectedClosedRoleTasks: [],
+  selectedOpenRoleTasks: [],
 };
 
 const auditSlice = createSlice({
@@ -25,22 +29,37 @@ const auditSlice = createSlice({
         return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
       });
     },
-    setSelectedTasks: (state, action: PayloadAction<number[]>) => {
-      state.selectedTasks = action.payload;
+    setOpenRoleTasks: (state, action: PayloadAction<OpenRoleAuditTask[]>) => {
+      state.openRoleTasks = action.payload;
     },
-    clearSelection: (state) => {
-      state.selectedTasks = [];
+    clearClosedRoleSelection: (state) => {
+      state.selectedClosedRoleTasks = [];
     },
-    selectAllTasks: (state) => {
-      state.selectedTasks = state.closedRoleTasks.map((task) => task.id);
+    clearOpenRoleSelection: (state) => {
+      state.selectedOpenRoleTasks = [];
     },
-    toggleTaskSelection: (state, action: PayloadAction<number>) => {
+    selectAllClosedRoleTasks: (state) => {
+      state.selectedClosedRoleTasks = state.closedRoleTasks.map((task) => task.id);
+    },
+    selectAllOpenRoleTasks: (state) => {
+      state.selectedOpenRoleTasks = state.openRoleTasks.map((task) => task.id);
+    },
+    toggleClosedRoleTaskSelection: (state, action: PayloadAction<number>) => {
       const taskId = action.payload;
-      const index = state.selectedTasks.indexOf(taskId);
+      const index = state.selectedClosedRoleTasks.indexOf(taskId);
       if (index === -1) {
-        state.selectedTasks.push(taskId);
+        state.selectedClosedRoleTasks.push(taskId);
       } else {
-        state.selectedTasks.splice(index, 1);
+        state.selectedClosedRoleTasks.splice(index, 1);
+      }
+    },
+    toggleOpenRoleTaskSelection: (state, action: PayloadAction<number>) => {
+      const taskId = action.payload;
+      const index = state.selectedOpenRoleTasks.indexOf(taskId);
+      if (index === -1) {
+        state.selectedOpenRoleTasks.push(taskId);
+      } else {
+        state.selectedOpenRoleTasks.splice(index, 1);
       }
     },
   },
@@ -49,10 +68,13 @@ const auditSlice = createSlice({
 export const {
   setLoading,
   setClosedRoleTasks,
-  setSelectedTasks,
-  toggleTaskSelection,
-  clearSelection,
-  selectAllTasks,
+  setOpenRoleTasks,
+  clearClosedRoleSelection,
+  clearOpenRoleSelection,
+  selectAllClosedRoleTasks,
+  selectAllOpenRoleTasks,
+  toggleClosedRoleTaskSelection,
+  toggleOpenRoleTaskSelection,
 } = auditSlice.actions;
 
 export default auditSlice.reducer; 

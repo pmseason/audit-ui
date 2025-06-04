@@ -1,12 +1,12 @@
 import { getClosedRoleAuditTasks, createClosedRoleAudit, startClosedRoleAudit } from '@/services/api';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import React from 'react';
-import { setLoading, setClosedRoleTasks, clearSelection } from '@/store/auditSlice';
+import { setLoading, setClosedRoleTasks, clearClosedRoleSelection } from '@/store/auditSlice';
 import { Button } from '../ui/button';
 
 export const ActionsBar: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { selectedTasks } = useAppSelector((state) => state.audit);
+    const { selectedClosedRoleTasks } = useAppSelector((state) => state.audit);
 
   const handleNewAudit = async () => {
     dispatch(setLoading(true));
@@ -14,7 +14,7 @@ export const ActionsBar: React.FC = () => {
       await createClosedRoleAudit();
       const tasks = await getClosedRoleAuditTasks();
       dispatch(setClosedRoleTasks(tasks));
-      dispatch(clearSelection());
+      dispatch(clearClosedRoleSelection());
     } catch (error) {
       console.error('Error starting audit:', error);
       // You might want to show an error toast here
@@ -24,14 +24,14 @@ export const ActionsBar: React.FC = () => {
   };
 
   const handleStartAudit = async () => {
-    if (selectedTasks.length === 0) return;
+    if (selectedClosedRoleTasks.length === 0) return;
     
     dispatch(setLoading(true));
     try {
-      await startClosedRoleAudit(selectedTasks);
+      await startClosedRoleAudit(selectedClosedRoleTasks);
       const tasks = await getClosedRoleAuditTasks();
       dispatch(setClosedRoleTasks(tasks));
-      dispatch(clearSelection());
+      dispatch(clearClosedRoleSelection());
     } catch (error) {
       console.error('Error starting audit:', error);
       // You might want to show an error toast here
@@ -53,9 +53,9 @@ export const ActionsBar: React.FC = () => {
         onClick={handleStartAudit}
         variant="default"
         className="bg-green-600 hover:bg-green-700"
-        disabled={selectedTasks.length === 0}
+        disabled={selectedClosedRoleTasks.length === 0}
       >
-        Start Audit ({selectedTasks.length})
+        Start Audit ({selectedClosedRoleTasks.length})
       </Button>
     </div>
   );
