@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { addOpenRoleSearch, getOpenRoleSearch } from "@/services/api";
+import { addOpenRoleTask, getOpenRoleTasks } from "@/services/api";
 import { setOpenRoleTasks } from "@/store/auditSlice";
 import { useAppDispatch } from "@/store/hooks";
 
@@ -41,8 +41,8 @@ const OpenRoleAuditForm = ({ triggerIcon }: Props) => {
 
   const handleFormSubmit = async (data: { url: string }) => {
     try {
-      await addOpenRoleSearch({ url: data.url, extra_notes: "" });
-      const tasks = await getOpenRoleSearch();
+      await addOpenRoleTask({ url: data.url, extra_notes: "" });
+      const tasks = await getOpenRoleTasks();
       dispatch(setOpenRoleTasks(tasks));
       clearForm();
       setOpen(false);

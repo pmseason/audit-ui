@@ -4,7 +4,7 @@ import OpenRoleAuditForm from "@/components/open-role-audit-form/OpenRoleAuditFo
 import { Button } from "@/components/ui/button";
 import { OpenRoleAuditTable } from "@/components/open-role-audit-table/OpenRoleAuditTable";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { getOpenRoleSearch, startOpenRoleAudit } from "@/services/api";
+import { getOpenRoleTasks, startOpenRoleAudit } from "@/services/api";
 import { setLoading, setOpenRoleTasks } from "@/store/auditSlice";
 
 function OpenRoleAudit() {
@@ -17,7 +17,7 @@ function OpenRoleAudit() {
         dispatch(setLoading(true));
         try {
             await startOpenRoleAudit(selectedOpenRoleTasks);
-            const tasks = await getOpenRoleSearch();
+            const tasks = await getOpenRoleTasks();
             dispatch(setOpenRoleTasks(tasks));
         } catch (error) {
             console.error('Error starting audit:', error);

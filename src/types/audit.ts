@@ -77,7 +77,6 @@ export interface ScrapedJob {
     company: string;
     location: string;
     description: string;
-    task: OpenRoleAuditTask;
     url: string;
     other: string;
 }
@@ -88,6 +87,7 @@ export interface OpenRoleAuditTask {
     extra_notes: string;
     status: AuditStatus;
     status_message: string;
+    scraped_jobs?: ScrapedJob[];
     updated_at: string;
     created_at: string;
 }

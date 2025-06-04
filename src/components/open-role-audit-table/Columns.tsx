@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { OpenRoleAuditTask } from "../../types/audit";
 import { StatusCell } from "../closed-role-audit-table/StatusCell";
-import { Info } from "lucide-react";
+import { Info, LucideArrowDown, LucideArrowRight } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -13,6 +13,19 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { toggleOpenRoleTaskSelection, selectAllOpenRoleTasks, clearOpenRoleSelection } from "../../store/auditSlice";
 
 export const columns: ColumnDef<OpenRoleAuditTask>[] = [
+  {
+    header: "See More",
+    cell({ row }) {
+      return (
+        <div
+          onClick={row.getToggleExpandedHandler()}
+          className="cursor-pointer"
+        >
+          {row.getIsExpanded() ? <LucideArrowDown /> : <LucideArrowRight />}
+        </div>
+      );
+    },
+  },
   {
     id: "select",
     header: ({ table }) => {

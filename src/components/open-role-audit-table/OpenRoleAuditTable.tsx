@@ -4,7 +4,7 @@ import { columns } from "./Columns";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setLoading, setOpenRoleTasks } from "../../store/auditSlice";
 import { RefreshCw } from "lucide-react";
-import { getOpenRoleSearch } from "@/services/api";
+import { getOpenRoleTasks } from "@/services/api";
 
 export function OpenRoleAuditTable() {
   const dispatch = useAppDispatch();
@@ -14,7 +14,7 @@ export function OpenRoleAuditTable() {
   const fetchData = async () => {
     dispatch(setLoading(true));
     try {
-      const tasks = await getOpenRoleSearch();
+      const tasks = await getOpenRoleTasks();
       dispatch(setOpenRoleTasks(tasks));
       setLastRefreshed(new Date());
     } catch (err) {
