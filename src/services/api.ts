@@ -30,3 +30,7 @@ export const getOpenRoleTasks = async (): Promise<OpenRoleAuditTask[]> => {
 export const startOpenRoleAudit = async (taskIds: number[]): Promise<void> => {
   await api.post('/audit/start/open', { taskIds });
 };
+
+export const deleteOpenRoleTask = async (taskId: number): Promise<void> => {
+  await api.delete(`/audit/open/${taskId}`);
+};

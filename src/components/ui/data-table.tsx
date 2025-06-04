@@ -20,6 +20,8 @@ import {
 import { DataTablePagination } from "./data-table-pagination"
 import { Loader2 } from "lucide-react"
 import { useMemo } from "react"
+import { ScrapedJob } from "@/types/audit"
+import { columns as scrapedJobColumns } from "@/components/open-role-audit-table/job-results-table/Columns"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -82,7 +84,9 @@ export function DataTable<TData, TValue>({
                   {row.getIsExpanded() && (
                     <TableRow>
                       <TableCell colSpan={row.getVisibleCells().length}>
-                        {"hey"}
+                        <ScrapedJobDataTable
+                          data={(row.original as any).scraped_jobs as ScrapedJob[]} 
+                        />
                       </TableCell>
                     </TableRow>
                   )}
@@ -105,6 +109,21 @@ export function DataTable<TData, TValue>({
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       )}
+    </div>
+  )
+}
+
+export function ScrapedJobDataTable({
+  data,
+  isLoading = false,
+}: {
+  data: ScrapedJob[]
+  isLoading?: boolean
+}) {
+  return (
+    <div>
+      <p>Found {data.length} jobs</p>
+      <DataTable<ScrapedJob, any> columns={scrapedJobColumns} data={data} isLoading={isLoading} />
     </div>
   )
 } 

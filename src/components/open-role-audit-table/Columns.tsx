@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { OpenRoleAuditTask } from "../../types/audit";
 import { StatusCell } from "../closed-role-audit-table/StatusCell";
-import { Info, LucideArrowDown, LucideArrowRight } from "lucide-react";
+import { Info, LucideArrowDown, LucideArrowRight, Trash2 } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -10,7 +10,8 @@ import {
 } from "../ui/tooltip";
 import { Checkbox } from "../ui/checkbox";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { toggleOpenRoleTaskSelection, selectAllOpenRoleTasks, clearOpenRoleSelection } from "../../store/auditSlice";
+import { toggleOpenRoleTaskSelection, selectAllOpenRoleTasks, clearOpenRoleSelection, setOpenRoleTasks, setLoading } from "../../store/auditSlice";
+import { deleteOpenRoleTask, getOpenRoleTasks } from "../../services/api";
 
 export const columns: ColumnDef<OpenRoleAuditTask>[] = [
   {
@@ -125,5 +126,37 @@ export const columns: ColumnDef<OpenRoleAuditTask>[] = [
         </div>
       );
     },
+  },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => {
+      const dispatch = useAppDispatch();
+      
+      const handleDelete = async () => {
+        dispatch(setLoading(true));
+        try {
+          await deleteOpenRoleTask(row.original.id);
+          const tasks = await getOpenRoleTasks();
+          dispatch(setOpenRoleTasks(tasks));
+        } catch (error) {
+          console.error('Error deleting task:', error);
+        } finally {
+          dispatch(setLoading(false));
+        }
+      };
+
+      return (
+        <button
+          onClick={handleDelete}
+          className="p-1 hover:bg-gray-100 rounded-full transition-colors text-red-600 hover:text-red-700"
+          title="Delete task"
+        >
+          <Trash2 className="h-4 w-4" />
+        </button>
+      );
+    },
+    enableSorting: false,
+    enableHiding: false,
   },
 ]; 
