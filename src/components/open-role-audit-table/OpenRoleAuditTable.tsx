@@ -5,6 +5,8 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setLoading, setOpenRoleTasks } from "../../store/auditSlice";
 import { RefreshCw } from "lucide-react";
 import { getOpenRoleAuditTasks } from "@/services/api";
+import { Link } from "react-router";
+import { Button } from "../ui/button";
 
 export function OpenRoleAuditTable() {
   const dispatch = useAppDispatch();
@@ -41,8 +43,14 @@ export function OpenRoleAuditTable() {
           >
             <RefreshCw className="w-4 h-4" />
           </button>
+          <Link to="https://directus.apmseason.com/admin/content/open_role_audit_tasks" target="_blank">
+            <Button variant="outline">
+              Edit in Directus
+            </Button>
+          </Link>
         </div>
       </div>
+      <p className="text-sm text-gray-500 mb-4">This is the list of URLs that the automation scrapes jobs from every day. You can edit the tasks in Directus.</p>
       <DataTable columns={columns} data={openRoleTasks} isLoading={isLoading} />
     </div>
   );

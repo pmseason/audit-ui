@@ -1,8 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ScrapedJob } from "@/types/audit";
+import { ScrapedPosition } from "@/types/audit";
 import { useState } from "react";
 
-export const columns: ColumnDef<ScrapedJob>[] = [
+export const columns: ColumnDef<ScrapedPosition>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -39,7 +39,7 @@ export const columns: ColumnDef<ScrapedJob>[] = [
           <div className={`whitespace-normal break-words ${!isExpanded ? 'line-clamp-5' : ''}`}>
             {description}
           </div>
-          {description.length > 300 && (
+          {description && description.length > 300 && (
             <button
               onClick={() => setIsExpanded(!isExpanded)}
               className="text-blue-600 hover:underline text-sm mt-1"

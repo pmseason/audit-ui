@@ -1,5 +1,5 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/Sidebar";
+import { AppSidebar } from "@/components/common/Sidebar";
 import { OpenRoleAuditTable } from "@/components/open-role-audit-table/OpenRoleAuditTable";
 
 function OpenRoleAudit() {

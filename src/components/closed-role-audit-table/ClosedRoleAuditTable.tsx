@@ -29,18 +29,6 @@ export function ClosedRoleAuditTable() {
     fetchData();
   }, [dispatch]);
 
-  useEffect(() => {
-    const hasInProgressTasks = closedRoleTasks.some(
-      (task) => task.status === AuditStatus.IN_PROGRESS || task.status === AuditStatus.PENDING
-    );
-
-    if (!hasInProgressTasks) return;
-
-    const pollInterval = setInterval(fetchData, 15000);
-
-    return () => clearInterval(pollInterval);
-  }, [closedRoleTasks]);
-
 
   //sort closedRoleTasks to put in progress tasks at the top
   const statusOrder = {

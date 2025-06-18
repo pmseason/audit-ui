@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ClosedRoleAuditTask, OpenRoleAuditTask } from '../types/audit';
+import { ClosedRoleAuditTask, OpenRoleAuditTask, ScrapedPosition } from '../types/audit';
 import { JobStatus } from '@/types/jobs';
 
 const api = axios.create({
@@ -29,5 +29,9 @@ export const getOpenRoleAuditTasks = async (): Promise<OpenRoleAuditTask[]> => {
   return response.data;
 };
 
-
+export const getScrapedPositions = async (date?: string): Promise<ScrapedPosition[]> => {
+  const params = date ? { date } : {};
+  const response = await api.get<ScrapedPosition[]>('/positions/scraped-positions', { params });
+  return response.data ?? [];
+};
 

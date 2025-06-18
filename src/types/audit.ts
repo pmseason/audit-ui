@@ -1,7 +1,7 @@
 // import { Browser } from "puppeteer-core";
 // import { SearchConfig } from "./config.type";
 
-import { Job } from "@/types/jobs";                          
+import { Company, Job } from "@/types/jobs";                          
 
 export enum AuditStatus {
     PENDING = "pending",
@@ -24,24 +24,20 @@ export interface ClosedRoleAuditTask {
     created_at: string;
 }
 
-export interface ScrapedJob {
-    id: number;
-    title: string;
-    company: string;
-    location: string;
-    description: string;
-    url: string;
-    other: string;
-}
-
 export interface OpenRoleAuditTask {
     id: number;
     url: string;
     extra_notes: string;
     status: AuditStatus;
     status_message: string;
-    scraped_jobs?: ScrapedJob[];
     updated_at: string;
     created_at: string;
+    company: Company;
+}
+
+export type ScrapedPosition = Job & {
+    location: string;
+    other: string;
+    years_experience: string;
 }
 

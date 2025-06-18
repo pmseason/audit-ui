@@ -1,10 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ClosedRoleAuditTask } from "../../types/audit";
-import { Checkbox } from "../ui/checkbox";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { toggleClosedRoleTaskSelection, selectAllClosedRoleTasks, clearClosedRoleSelection } from "../../store/auditSlice";
 import { StatusCell } from "./StatusCell";
-import { CompanyCell } from "./CompanyCell";
+import { CompanyCell } from "../common/CompanyCell";
 import { Info } from "lucide-react";
 import {
   Tooltip,
@@ -15,40 +12,6 @@ import {
 import { ActionsCell } from "./ActionsCell";
 
 export const columns: ColumnDef<ClosedRoleAuditTask>[] = [
-  {
-    id: "select",
-    header: ({ table }) => {
-      const dispatch = useAppDispatch();
-      const selectedTasks = useAppSelector((state) => state.audit.selectedClosedRoleTasks);
-      const allTaskIds = table.getRowModel().rows.map(row => row.original.id);
-      const allSelected = allTaskIds.length > 0 && allTaskIds.every(id => selectedTasks.includes(id));
-
-      return (
-        <Checkbox
-          checked={allSelected}
-          onCheckedChange={() => dispatch(allSelected ? clearClosedRoleSelection() : selectAllClosedRoleTasks())}
-          aria-label="Select all"
-          className="translate-y-[2px]"
-        />
-      );
-    },
-    cell: ({ row }) => {
-      const dispatch = useAppDispatch();
-      const selectedTasks = useAppSelector((state) => state.audit.selectedClosedRoleTasks);
-      const isSelected = selectedTasks.includes(row.original.id);
-
-      return (
-        <Checkbox
-          checked={isSelected}
-          onCheckedChange={() => dispatch(toggleClosedRoleTaskSelection(row.original.id))}
-          aria-label="Select row"
-          className="translate-y-[2px]"
-        />
-      );
-    },
-    enableSorting: false,
-    enableHiding: false,
-  },
   {
     accessorKey: "updated_at",
     header: "Last Run",

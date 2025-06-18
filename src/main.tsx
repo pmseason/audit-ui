@@ -7,6 +7,7 @@ import './index.css'
 import ClosedRoleAudit from './pages/ClosedRoleAudit'
 import { SidebarProvider } from './components/ui/sidebar'
 import OpenRoleAudit from './pages/OpenRoleAudit'
+import ScrapedPositions from './pages/ScrapedPositions'
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/open-role-audit",
     element: <OpenRoleAudit />,
+  },
+  {
+    path: "/scraped-positions",
+    element: <ScrapedPositions />,
   },
 ])
 

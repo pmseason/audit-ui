@@ -1,7 +1,7 @@
-import { ClosedRoleAuditTask } from "../../types/audit";
+import { Company } from "@/types/jobs";
 
 type CompanyCellProps = {
-  company: ClosedRoleAuditTask["job"]["company"];
+  company: Company;
 };
 
 export const CompanyCell = ({ company }: CompanyCellProps) => {

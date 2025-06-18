@@ -89,21 +89,21 @@ export const getStatusAttribute = (
     });
     return foundStatus ? foundStatus[attribute] : undefined;
 };
-
+export interface Company {
+    id: string;
+    name: string;
+    type: Industry;
+    createdAt: Date;
+    location: string;
+    logo?: {
+        id: string;
+        filename_disk: string
+        url: string
+    }
+}
 export interface Job {
     id: string;
-    company: {
-        id: string;
-        name: string;
-        type: Industry;
-        createdAt: Date;
-        location: string;
-        logo?: {
-            id: string;
-            filename_disk: string
-            url: string
-        }
-    };
+    company: Company;
     jobType: "full-time" | "internship";
     status: JobStatus;
     title: string;
@@ -115,6 +115,7 @@ export interface Job {
     dateAdded: string;
     salaryText: string;
     visaSponsored: VisaSponsor;
+    site: string;
 }
 
 

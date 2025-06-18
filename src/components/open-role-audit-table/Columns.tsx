@@ -1,73 +1,23 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { OpenRoleAuditTask } from "../../types/audit";
 import { StatusCell } from "../closed-role-audit-table/StatusCell";
-import { Info, LucideArrowDown, LucideArrowRight } from "lucide-react";
+import { Info } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { Checkbox } from "../ui/checkbox";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { toggleOpenRoleTaskSelection, selectAllOpenRoleTasks, clearOpenRoleSelection } from "../../store/auditSlice";
 
 export const columns: ColumnDef<OpenRoleAuditTask>[] = [
   {
-    header: "See More",
-    cell({ row }) {
-      return (
-        <div
-          onClick={row.getToggleExpandedHandler()}
-          className="cursor-pointer"
-        >
-          {row.getIsExpanded() ? <LucideArrowDown /> : <LucideArrowRight />}
-        </div>
-      );
-    },
-  },
-  {
-    id: "select",
-    header: ({ table }) => {
-      const dispatch = useAppDispatch();
-      const selectedTasks = useAppSelector((state) => state.audit.selectedOpenRoleTasks);
-      const allTaskIds = table.getRowModel().rows.map(row => row.original.id);
-      const allSelected = allTaskIds.length > 0 && allTaskIds.every(id => selectedTasks.includes(id));
-
-      return (
-        <Checkbox
-          checked={allSelected}
-          onCheckedChange={() => dispatch(allSelected ? clearOpenRoleSelection() : selectAllOpenRoleTasks())}
-          aria-label="Select all"
-          className="translate-y-[2px]"
-        />
-      );
-    },
-    cell: ({ row }) => {
-      const dispatch = useAppDispatch();
-      const selectedTasks = useAppSelector((state) => state.audit.selectedOpenRoleTasks);
-      const isSelected = selectedTasks.includes(row.original.id);
-
-      return (
-        <Checkbox
-          checked={isSelected}
-          onCheckedChange={() => dispatch(toggleOpenRoleTaskSelection(row.original.id))}
-          aria-label="Select row"
-          className="translate-y-[2px]"
-        />
-      );
-    },
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
     accessorKey: "updated_at",
-    header: "Last Updated",
+    header: "Last Run",
     cell: ({ row }) => {
       const updatedAt = row.original.updated_at;
       return (
         <div className="whitespace-nowrap">
-          {updatedAt ? new Date(updatedAt).toLocaleString() : "N/A"}
+          {updatedAt ? new Date(updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' + new Date(updatedAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' }) : "N/A"}
         </div>
       );
     },

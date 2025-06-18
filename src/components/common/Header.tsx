@@ -1,6 +1,6 @@
 import { Menu } from "lucide-react"
-import { Button } from "./ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
+import { Button } from "../ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 
 export function Header() {
   return (
