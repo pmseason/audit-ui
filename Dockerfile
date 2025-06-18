@@ -6,8 +6,8 @@ COPY package*.json .
 
 ARG VITE_BACKEND_URL
 ARG VITE_IMAGES_CDN_URL
-RUN echo "VITE_BACKEND_URL=${VITE_BACKEND_URL}" > .env
-RUN echo "VITE_IMAGES_CDN_URL=${VITE_IMAGES_CDN_URL}" >> .env
+RUN echo "VITE_BACKEND_URL=https://audit-backend-537386600621.us-west1.run.app" > .env
+RUN echo "VITE_IMAGES_CDN_URL=https://images.careerseason.com" >> .env
 
 
 RUN npm ci
