@@ -2,7 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package*.json .
+COPY package*.json ./
 
 ARG VITE_BACKEND_URL
 ARG VITE_IMAGES_CDN_URL
@@ -12,7 +12,7 @@ RUN echo "VITE_IMAGES_CDN_URL=https://images.careerseason.com" >> .env
 
 RUN npm ci
 
-COPY . .
+COPY . ./
 
 RUN npm run build
 
