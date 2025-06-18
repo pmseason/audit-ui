@@ -12,6 +12,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import { ActionsCell } from "./ActionsCell";
 
 export const columns: ColumnDef<ClosedRoleAuditTask>[] = [
   {
@@ -50,12 +51,12 @@ export const columns: ColumnDef<ClosedRoleAuditTask>[] = [
   },
   {
     accessorKey: "updated_at",
-    header: "Last Updated",
+    header: "Last Run",
     cell: ({ row }) => {
       const updatedAt = row.original.updated_at;
       return (
         <div className="whitespace-nowrap">
-          {updatedAt ? new Date(updatedAt).toLocaleString() : "N/A"}
+          {updatedAt ? new Date(updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' + new Date(updatedAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' }) : "N/A"}
         </div>
       );
     },
@@ -132,5 +133,18 @@ export const columns: ColumnDef<ClosedRoleAuditTask>[] = [
       );
     },
   },
-
+  {
+    header: "Status in Job Table",
+    cell: ({ row }) => {
+      const status = row.original.job.status;
+      return <div>{status}</div>;
+    },
+  },
+  {
+    accessorKey: "screenshot",
+    header: "Screenshot",
+    cell: ({ row }) => {
+      return <ActionsCell task={row.original} />;
+    },
+  },
 ];

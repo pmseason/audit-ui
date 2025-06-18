@@ -1,7 +1,6 @@
 import { ClosedRoleAuditTable } from "../components/closed-role-audit-table/ClosedRoleAuditTable";
-import { ActionsBar } from "../components/actions-bar/ActionsBar";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/components/Sidebar";
 
 function ClosedRoleAudit() {
   return (
@@ -14,7 +13,6 @@ function ClosedRoleAudit() {
       <div className="flex-1">
         <div className="p-4">
         </div>
-        <ActionsBar />
         <ClosedRoleAuditTable />
       </div>
     </main>
