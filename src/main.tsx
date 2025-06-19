@@ -8,6 +8,7 @@ import ClosedRoleAudit from './pages/ClosedRoleAudit'
 import { SidebarProvider } from './components/ui/sidebar'
 import OpenRoleAudit from './pages/OpenRoleAudit'
 import ScrapedPositions from './pages/ScrapedPositions'
+import { TooltipProvider } from './components/ui/tooltip'
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,9 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <SidebarProvider defaultOpen={false}>
-        <RouterProvider router={router} />
+        <TooltipProvider>
+          <RouterProvider router={router} />
+        </TooltipProvider>
       </SidebarProvider>
     </Provider>
   </StrictMode>,

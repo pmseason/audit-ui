@@ -35,3 +35,11 @@ export const getScrapedPositions = async (date?: string): Promise<ScrapedPositio
   return response.data ?? [];
 };
 
+export const promoteScrapedPosition = async (scrapedPositionId: string): Promise<void> => {
+  await api.put(`/positions/${scrapedPositionId}/promote`);
+};
+
+export const deleteScrapedPosition = async (scrapedPositionId: string): Promise<void> => {
+  await api.delete(`/positions/${scrapedPositionId}`);
+};
+

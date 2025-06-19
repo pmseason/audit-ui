@@ -39,5 +39,6 @@ export type ScrapedPosition = Job & {
     location: string;
     other: string;
     years_experience: string;
+    positions: Job[];
 }
 
